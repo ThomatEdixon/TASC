@@ -3,6 +3,7 @@ import java.util.Scanner;
 public class Main {
     public static void question1(){
         // Tính bất biến
+        System.out.println("Tính bất biến");
         String str = "Hello";
         str.concat(" World");  // Không thay đổi chuỗi ban đầu
         System.out.println("String before "+str);
@@ -12,6 +13,7 @@ public class Main {
         System.out.println(str);
 
         // cung cấp nhiều phương thức
+        System.out.println("\n Cung cấp nhiều phương thức");
         String string = "Java Programming";
 
         System.out.println("Length: " + string.length());
@@ -25,6 +27,7 @@ public class Main {
         String str2 = "   Hello World   ";
         System.out.println("Trimmed: " + str2.trim());
         // biểu thức chính quy
+        System.out.println("\n Biểu thức chính quy");
         String stringRegex = "abc123";
 
         // Kiểm tra chuỗi có khớp với mẫu biểu thức chính quy
