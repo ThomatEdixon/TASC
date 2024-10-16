@@ -54,8 +54,8 @@ public class Main {
         String string3 = new String("Hello");
 
         String string4 = string3.intern();  // Thêm string3 vào String Pool
-        System.out.println("Compare string 1 and string 3"+ string1 == string3);
-        System.out.println("Compare string 1 and string 4"+string1 == string4);
+        System.out.println(string1 == string3);
+        System.out.println(string1 == string4);
 
     }
     public static void question3(){

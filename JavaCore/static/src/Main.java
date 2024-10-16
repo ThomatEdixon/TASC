@@ -22,6 +22,8 @@ public class Main {
 
         // Khởi tạo đối tượng để truy cập phương thức displayLimitCount;
         Test test = new Test();
+        // khởi tạo lớp static qua outnner class
+        Test.InnerTest innerTest = new Test.InnerTest();
         test.displayLimitCount();
     }
 }

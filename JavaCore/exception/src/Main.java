@@ -37,7 +37,7 @@ public class Main {
             System.out.println("Error when reading file" + e1.getMessage());
         }
     }
-    public static void readFile(String fileName) throws IOException { // sử dụng throws để khia báo phươngt hức có thể ném ra ngoại lệ IOException
+    public static void readFile(String fileName) throws IOException { // sử dụng throws để khai báo phương thức có thể ném ra ngoại lệ IOException
         FileReader file = new FileReader(fileName);
         BufferedReader fileInput = new BufferedReader(file);
     }

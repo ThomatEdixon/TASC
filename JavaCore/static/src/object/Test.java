@@ -29,4 +29,11 @@ public class Test {
         // Mỗi lần tạo đối tượng, tăng count
         count++;
     }
+    public static class InnerTest {
+
+        public InnerTest(){
+            count++;
+        }
+
+    }
 }
