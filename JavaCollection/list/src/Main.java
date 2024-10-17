@@ -55,8 +55,8 @@ public class Main {
         linkedList.add("Car");
         linkedList.add("Bike");
         linkedList.add("Bus");
-        linkedList.remove(1); // Xóa "Bike"
-        System.out.println(linkedList); // Kết quả: [Car, Bus]
+        linkedList.remove(1);
+        System.out.println(linkedList);
 
     }
     public static void stack(){
