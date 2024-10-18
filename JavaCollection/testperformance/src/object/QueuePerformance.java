@@ -3,19 +3,7 @@ package object;
 import java.util.*;
 
 public class QueuePerformance {
-        /*==== Queue Performance ====
-        Testing LinkedList
-        Time to offer: 1819308 ns
-        Time to iterate: 1064117 ns
-        Time to search: 599279 ns chậm hơn
-        Time to clear: 376195 ns chậm hơn
 
-        Testing PriorityQueue
-        Time to offer: 2002746 ns chậm hơn
-        Time to iterate: 1277114 ns chậm hơn
-        Time to search: 281412 ns
-        Time to clear: 156908 ns
-        */
     public static void comparePerformance(int numElements) {
         compareQueue(new LinkedList<>(), numElements);
         compareQueue(new PriorityQueue<>(), numElements);

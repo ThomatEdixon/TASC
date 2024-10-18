@@ -1,113 +1,97 @@
+import performance.HashMapPerformance;
+import performance.LinkedHashMapPerformance;
+import performance.TreeMapPerformance;
+
 import java.util.*;
 
 public class Main {
+    public static void map(){
+        Map<String, Integer> students = new HashMap<>();
+
+        // Thêm phần tử vào Map (sử dụng phương thức put)
+        students.put("John", 85);
+        students.put("Alice", 92);
+        students.put("Bob", 75);
+        students.put("Daisy", 89);
+
+        // Truy xuất giá trị theo khóa (sử dụng phương thức get)
+        System.out.println("Alice score is: " + students.get("Alice"));
+
+        // Xóa phần tử dựa trên khóa (sử dụng phương thức remove)
+        students.remove("Bob");
+        System.out.println("Map after remove Bob: " + students);
+
+        // Kiểm tra xem một khóa có tồn tại hay không (sử dụng phương thức containsKey)
+        boolean hasJohn = students.containsKey("John");
+        System.out.println("is John exist in map? " + hasJohn);
+
+        // Kiểm tra xem một giá trị có tồn tại hay không (sử dụng phương thức containsValue)
+        boolean hasScore92 = students.containsValue(92);
+        System.out.println("Have anyone have 92? " + hasScore92);
+
+        // Lấy tất cả các khóa (sử dụng phương thức keySet)
+        System.out.println("List Student: " + students.keySet());
+
+        // Lấy tất cả các giá trị (sử dụng phương thức values)
+        System.out.println("List score: " + students.values());
+
+        // Lấy tất cả các cặp khóa-giá trị (sử dụng phương thức entrySet)
+        System.out.println("List student and score:");
+        for (Map.Entry<String, Integer> entry : students.entrySet()) {
+            System.out.println(entry.getKey() + ": " + entry.getValue());
+        }
+    }
     public static void hashMap(){
-        HashMap<Integer, String> students = new HashMap<>();
-
-        // Thêm các cặp khóa-giá trị (ID sinh viên, tên sinh viên) vào HashMap
-        students.put(101, "Nguyen Van A");
-        students.put(102, "Le Thi B");
-        students.put(103, "Tran Van C");
-
-        // Lấy và in tên sinh viên có ID là 102
-        System.out.println("Student have ID 102 là: " + students.get(102));
-
-        // Kiểm tra xem HashMap có chứa sinh viên với ID 104 hay không
-        if (students.containsKey(104)) {
-            System.out.println("Student have ID 104 là: " + students.get(104));
-        } else {
-            System.out.println("Can not find ID 104");
-        }
-
-        // Duyệt qua tất cả các phần tử trong HashMap và in ra
-        System.out.println("\nList student:");
-        for (Integer id : students.keySet()) {
-            System.out.println("ID: " + id + ", Name: " + students.get(id));
-        }
+        HashMapPerformance hashMapPerformance = new HashMapPerformance();
+        hashMapPerformance.performanceAdd();
+        hashMapPerformance.performanceDelete();
+        hashMapPerformance.performanceIterator();
+        hashMapPerformance.performanceSearch();
     }
     public static void linkedHashMap(){
-        // Tạo LinkedHashMap và thêm các phần tử
-        LinkedHashMap<Integer, String> linkedHashMap = new LinkedHashMap<>();
+        LinkedHashMapPerformance linkedHashMapPerformance = new LinkedHashMapPerformance();
+        linkedHashMapPerformance.performanceAdd();
+        linkedHashMapPerformance.performanceDelete();
+        linkedHashMapPerformance.performanceIterator();
+        linkedHashMapPerformance.performanceSearch();
 
-        linkedHashMap.put(1, "Apple");
-        linkedHashMap.put(2, "Banana");
-        linkedHashMap.put(3, "Orange");
-        linkedHashMap.put(4, "Mango");
-
-        // In các phần tử theo thứ tự chèn
-        System.out.println("LinkedHashMap :");
-        for (Map.Entry<Integer, String> entry : linkedHashMap.entrySet()) {
-            System.out.println("Key: " + entry.getKey() + ", Value: " + entry.getValue());
-        }
-
-        // Tạo LinkedHashMap theo thứ tự truy cập (access order)
-        LinkedHashMap<Integer, String> accessOrderMap = new LinkedHashMap<>(16, 0.75f, true);
-
-        accessOrderMap.put(1, "Apple");
-        accessOrderMap.put(2, "Banana");
-        accessOrderMap.put(3, "Orange");
-        accessOrderMap.put(4, "Mango");
-
-        // Truy cập một vài phần tử
-        accessOrderMap.get(2);
-        accessOrderMap.get(1);
-
-        // In các phần tử theo thứ tự truy cập
-        System.out.println("\nLinkedHashMap :");
-        for (Map.Entry<Integer, String> entry : accessOrderMap.entrySet()) {
-            System.out.println("Key: " + entry.getKey() + ", Value: " + entry.getValue());
-        }
     }
     public static void treeMap(){
-        // Tạo một TreeMap
-        TreeMap<Integer, String> treeMap = new TreeMap<>();
+        TreeMapPerformance treeMapPerformance = new TreeMapPerformance();
+        treeMapPerformance.performanceAdd();
+        treeMapPerformance.performanceDelete();
+        treeMapPerformance.performanceIterator();
+        treeMapPerformance.performanceSearch();
 
-        // Thêm các phần tử vào TreeMap
-        treeMap.put(3, "Apple");
-        treeMap.put(1, "Banana");
-        treeMap.put(4, "Orange");
-        treeMap.put(2, "Grapes");
-
-        // Hiển thị TreeMap
-        System.out.println("Tree map:");
-        for (Map.Entry<Integer, String> entry : treeMap.entrySet()) {
-            System.out.println("Key: " + entry.getKey() + ", Value: " + entry.getValue());
-        }
-
-        // Lấy phần tử đầu tiên và cuối cùng
-        System.out.println("key first: " + treeMap.firstEntry());
-        System.out.println("key last : " + treeMap.lastEntry());
-
-        // Lấy các phần tử trong khoảng khóa
-        System.out.println("Key from 2 to 4:");
-        TreeMap<Integer, String> subMap = new TreeMap<>(treeMap.subMap(2, true, 4, true));
-        for (Map.Entry<Integer, String> entry : subMap.entrySet()) {
-            System.out.println("Key: " + entry.getKey() + ", Value: " + entry.getValue());
-        }
     }
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         int choice ;
         do {
             System.out.println("====== MENU =====");
-            System.out.println("1. HashMap");
-            System.out.println("2. LinkedHashMap");
-            System.out.println("3. TreeMap");
+            System.out.println("1. Map Interface");
+            System.out.println("2. HashMap");
+            System.out.println("3. LinkedHashMap");
+            System.out.println("4. TreeMap");
             System.out.println("0. Exit");
-            System.out.println(" Choice option 0-3 : ");
+            System.out.println(" Choice option 0-4 : ");
 
             choice = scanner.nextInt();
 
             switch (choice){
                 case 1:
+                    System.out.println("Map Interface");
+                    map();
+                    break;
+                case 2:
                     System.out.println("HashMap");
                     hashMap();
                     break;
-                case 2:
+                case 3:
                     System.out.println("LinkedHashMap");
                     linkedHashMap();
                     break;
-                case 3:
+                case 4:
                     System.out.println("TreeMap");
                     treeMap();
                     break;

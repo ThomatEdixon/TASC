@@ -4,20 +4,7 @@ import java.util.*;
 
 public class ListPerformance {
     public static void comparePerformance(int numElements) {
-        /*
-             ==== List Performance ====
-            Testing ArrayList
-            Time to add: 1765350 ns
-            Time to iterate: 2355259 ns
-            Time to search: 1332853 ns
-            Time to clear: 151955 ns nhanh hơn
 
-            Testing LinkedList
-            Time to add: 1290503 ns nhanh hơn
-            Time to iterate: 972460 ns nhanh hơn
-            Time to search: 357020 ns nhanh hơn
-            Time to clear: 369242 ns
-        * */
         compareList(new ArrayList<>(), numElements);
         compareList(new LinkedList<>(), numElements);
     }

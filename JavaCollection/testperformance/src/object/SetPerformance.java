@@ -4,25 +4,6 @@ import java.util.*;
 
 public class SetPerformance {
     public static void comparePerformance(int numElements) {
-        /*==== Set Performance ====
-        Testing HashSet
-        Time to add: 2106317 ns nhanh nhất trong set
-        Time to iterate: 615979 ns nhanh nhất trong set // nhanh nhất trong toàn bộ clas triển khai collections
-        Time to search: 15745 ns chậm nhất trong set
-        Time to clear: 265484 ns
-
-        Testing LinkedHashSet
-        Time to add: 2531966 ns
-        Time to iterate: 2750992 ns chậm nhất trong set
-        Time to search: 3634 ns nhanh nhất trong set
-        Time to clear: 271767 ns chậm nhất trong set
-
-        Testing TreeSet
-        Time to add: 9448833 ns
-        Time to iterate: 1600424 ns
-        Time to search: 14854 ns
-        Time to clear: 4699 ns nhanh nhất trong set
-        */
 
         compareSet(new HashSet<>(), numElements);
         compareSet(new LinkedHashSet<>(),numElements);
