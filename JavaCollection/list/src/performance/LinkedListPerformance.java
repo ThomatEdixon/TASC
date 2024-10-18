@@ -1,8 +1,10 @@
 package performance;
 
+import interfaces.ListPerformance;
+
 import java.util.LinkedList;
 
-public class LinkedListPerformance implements ListPerformance{
+public class LinkedListPerformance implements ListPerformance {
     private static LinkedList<Integer> linkedList = new LinkedList<>();
     public LinkedListPerformance() {
     }

@@ -1,4 +1,4 @@
-package performance;
+package interfaces;
 
 public interface ListPerformance {
     static final int NUMBER_ELEMENTS = 999999;

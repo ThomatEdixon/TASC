@@ -1,80 +1,72 @@
+import performance.HashSetPerformance;
+import performance.LinkedHashSetPerformance;
+import performance.TreeSetPerformance;
+
 import java.util.*;
 
-enum Test { CODE, LEARN, CONTRIBUTE, QUIZ, MCQ };
+enum Test { CODE, LEARN, CONTRIBUTE, QUIZ, MCQ }
 
 public class Main {
+     public static void set(){
+         Set<String> set = new HashSet<>();
+         set.add("Java");
+         set.add("Python");
+         set.add("C#");
+         set.add("Java");  // Thêm trùng lặp
+         System.out.println("List data in set :"+ set);
+         System.out.println("Set contained Java :" + set.contains("Java"));
+         System.out.println("Set size :"+set.size());
+
+         // duyệt phần tử trong set
+
+         Iterator<String> iterator = set.iterator();
+
+         while (iterator.hasNext()) {
+             System.out.println(iterator.next());
+         }
+         // thêm 1 list vào set
+         List<String> list = List.of("C", "C++");
+         set.addAll(list);
+         System.out.println("List data in set after add all:"+ set);
+         // giữ lại phần tử có trong listRetain xoá các phần tử còn lại.
+         List<String> listRetain = List.of("Python", "C#","Java","Html","Css");
+         set.retainAll(listRetain);
+         System.out.println("List data in set after retain:"+ set);
+         // xoá phần tử có trong listMove
+         List<String> listRemove = List.of("Java", "C++");
+         set.removeAll(listRemove);
+         System.out.println("List data in set after remove:"+ set);
+         // xoá cả set
+         set.clear();
+         if(set.isEmpty()){
+             System.out.println("Set is empty");
+         }else {
+             System.out.println("List data in set :"+ set);
+         }
+
+     }
 
     public static void hashSet(){
-        HashSet<String> fruits = new HashSet<>();
-        fruits.add("Apple");
-        fruits.add("Banana");
-        fruits.add("Kiwi");
-        fruits.add("Orange");
-        fruits.add("Apple");// thêm giá trị đã có từ trước
-        for(String fruit : fruits){
-            System.out.println(fruit);
-        }
+        HashSetPerformance hashSetPerformance = new HashSetPerformance();
+        hashSetPerformance.performanceAdd();
+        hashSetPerformance.performanceDelete();
+        hashSetPerformance.performanceIterator();
+        hashSetPerformance.performanceSearch();
 
     }
     public static void linkedHashSet(){
-        LinkedHashSet<String> linkedHashSet = new LinkedHashSet<>();
-
-        // Thêm các phần tử vào LinkedHashSet
-        linkedHashSet.add("Java");
-        linkedHashSet.add("Python");
-        linkedHashSet.add("C++");
-        linkedHashSet.add("JavaScript");
-
-        // Thêm phần tử trùng lặp
-        linkedHashSet.add("Python"); // Sẽ không được thêm vào
-
-        // Hiển thị các phần tử trong LinkedHashSet
-        System.out.println("LinkedHashSet:");
-        for (String language : linkedHashSet) {
-            System.out.println(language);
-        }
-
-        // Kiểm tra một phần tử có tồn tại hay không
-        if (linkedHashSet.contains("Java")) {
-            System.out.println("\nJava exited in LinkedHashSet.");
-        }
-
-        // Xóa một phần tử
-        linkedHashSet.remove("C++");
-        System.out.println("\nAfter delete C++:");
-        for (String language : linkedHashSet) {
-            System.out.println(language);
-        }
-
-        // Kiểm tra kích thước của LinkedHashSet
-        System.out.println("\nSize ofLinkedHashSet: " + linkedHashSet.size());
-
+        LinkedHashSetPerformance linkedHashSetPerformance= new LinkedHashSetPerformance();
+        linkedHashSetPerformance.performanceAdd();
+        linkedHashSetPerformance.performanceDelete();
+        linkedHashSetPerformance.performanceIterator();
+        linkedHashSetPerformance.performanceSearch();
     }
     public static void treeSet(){
-        // Sử dụng lambda để tạo Comparator sắp xếp chuỗi theo độ dài
-        TreeSet<String> treeSet = new TreeSet<>((s1, s2) -> {
-            int len1 = s1.length();
-            int len2 = s2.length();
-
-            if (len1 != len2) {
-                return len1 - len2; // Sắp xếp theo độ dài tăng dần
-            } else {
-                return s1.compareTo(s2); // Nếu độ dài bằng nhau, sắp xếp theo thứ tự từ alphabet
-            }
-        });
-
-        // Thêm các phần tử vào TreeSet
-        treeSet.add("banana");
-        treeSet.add("apple");
-        treeSet.add("cherry");
-        treeSet.add("kiwi");
-        treeSet.add("grape");
-
-        // In các phần tử trong TreeSet
-        System.out.println("TreeSet order by lenght :");
-        for (String fruit : treeSet) {
-            System.out.println(fruit);
-        }
+        TreeSetPerformance treeSetPerformance = new TreeSetPerformance();
+        treeSetPerformance.performanceAdd();
+        treeSetPerformance.performanceDelete();
+        treeSetPerformance.performanceIterator();
+        treeSetPerformance.performanceSearch();
     }
     public static void enumSet(){
         // tạo enum set
@@ -88,29 +80,34 @@ public class Main {
         int choice ;
         do {
             System.out.println("====== MENU =====");
-            System.out.println("1. HashSet");
-            System.out.println("2. LinkedHashSet");
-            System.out.println("3. TreeSet");
-            System.out.println("4. EnumSet");
+            System.out.println("1. Set Interface");
+            System.out.println("2. HashSet");
+            System.out.println("3. LinkedHashSet");
+            System.out.println("4. TreeSet");
+            System.out.println("5. EnumSet");
             System.out.println("0. Exit");
-            System.out.println(" Choice option 0-4 : ");
+            System.out.println(" Choice option 0-5 : ");
 
             choice = scanner.nextInt();
 
             switch (choice){
                 case 1:
+                    System.out.println("Set Interface");
+                    set();
+                    break;
+                case 2:
                     System.out.println("HashSet");
                     hashSet();
                     break;
-                case 2:
+                case 3:
                     System.out.println("LinkedHashSet");
                     linkedHashSet();
                     break;
-                case 3:
+                case 4:
                     System.out.println("TreeSet");
                     treeSet();
                     break;
-                case 4:
+                case 5:
                     System.out.println("EnumSet");
                     enumSet();
                     break;

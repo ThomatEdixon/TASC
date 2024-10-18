@@ -1,8 +1,10 @@
 package performance;
 
+import interfaces.ListPerformance;
+
 import java.util.ArrayList;
 
-public class ArrayListPerformance implements ListPerformance{
+public class ArrayListPerformance implements ListPerformance {
     private static ArrayList<Integer> arrayList = new ArrayList<>();
     public ArrayListPerformance() {
     }
@@ -42,7 +44,7 @@ public class ArrayListPerformance implements ListPerformance{
     @Override
     public void performanceDelete() {
         long startTime = System.nanoTime();
-        arrayList.remove(ListPerformance.NUMBER_ELEMENTS - 1);
+        arrayList.remove(arrayList.size()-1);
         long endTime = System.nanoTime();
         System.out.println("Array list time to delete object: " + (endTime - startTime) + " ns");
 
