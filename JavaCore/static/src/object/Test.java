@@ -35,5 +35,12 @@ public class Test {
             count++;
         }
 
+        public static void displayInnerCount() {
+            System.out.println("Min object: " + MIN_COUNT);
+        }
+        public int increse(){
+            return count++;
+        }
+
     }
 }

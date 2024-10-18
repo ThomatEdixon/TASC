@@ -24,6 +24,7 @@ public class Main {
         Test test = new Test();
         // khởi tạo lớp static qua outnner class
         Test.InnerTest innerTest = new Test.InnerTest();
+        Test.InnerTest.displayInnerCount();
         test.displayLimitCount();
     }
 }

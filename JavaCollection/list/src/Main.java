@@ -1,6 +1,10 @@
+import performance.ArrayListPerformance;
+import performance.LinkedListPerformance;
+
 import java.util.*;
 
 public class Main {
+    private static final int NUMBER_ELEMENTS = 1000000;
     public static void listExample(){
         List<String> fruits = new ArrayList<>();
 
@@ -19,6 +23,9 @@ public class Main {
         // Lấy và in phần tử theo chỉ mục
         System.out.println("Index of 1: " + fruits.get(1)); // In "Banana"
 
+        for (String fruit : fruits) {
+            System.out.println(fruit);
+        }
         fruits.set(2, "Grapes");  // Cập nhật phần tử tại vị trí 2 thành "Grapes"
 
         // Xóa phần tử tại vị trí chỉ định
@@ -36,27 +43,29 @@ public class Main {
         // Kiểm tra danh sách có chứa phần tử cụ thể không
         if (fruits.contains("Apple")) {
             System.out.println("List contains 'Apple'");
+        }else{
+            System.out.println("List is not contained 'Apple'");
         }
 
         // Xóa tất cả phần tử khỏi danh sách
         fruits.clear();
         System.out.println("List after delete all: " + fruits);
+
     }
     public static void arrayList(){
-        List<String> arrayList = new ArrayList<>();
-        arrayList.add("Apple");
-        arrayList.add("Banana");
-        arrayList.add("Orange");
-        System.out.println(arrayList.get(1));
+        ArrayListPerformance arrayList = new ArrayListPerformance();
+        arrayList.performanceAdd();
+        arrayList.performanceDelete();
+        arrayList.performanceIterator();
+        arrayList.performanceSearch();
 
     }
     public static void linkedList(){
-        List<String> linkedList = new LinkedList<>();
-        linkedList.add("Car");
-        linkedList.add("Bike");
-        linkedList.add("Bus");
-        linkedList.remove(1);
-        System.out.println(linkedList);
+        LinkedListPerformance linkedList = new LinkedListPerformance();
+        linkedList.performanceAdd();
+        linkedList.performanceDelete();
+        linkedList.performanceIterator();
+        linkedList.performanceSearch();
 
     }
     public static void stack(){

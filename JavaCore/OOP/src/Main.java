@@ -20,6 +20,7 @@ public class Main {
     public static void finalFunction(){
         Animal myDog = new Dog("Husky");
         myDog.sleep();
+        myDog.speed();
         Animal myCat = new Cat("Indian Cat");
         myCat.sleep();
     }

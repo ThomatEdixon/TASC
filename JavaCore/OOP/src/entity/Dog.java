@@ -16,4 +16,5 @@ public class Dog extends Animal implements Walk, Run {
     public void move() { // Lỗi do kiểu dữ liệu khác nhau của hàm move ở hai interface
         System.out.println(this.getName()+" is running");
     }
+
 }

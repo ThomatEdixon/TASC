@@ -12,13 +12,14 @@ public class Main {
         arrayInteger[2] = 30;
         arrayInteger[3] = 40;
         arrayInteger[4] = 50;
+        // arrayInteger[5] = 60; // ArrayIndexOutOfBoundsException cố thêm phần tử vào mảng
         for (int i = 0; i < arrayInteger.length; i++) {
             System.out.println("Index of " + i + ": " + arrayInteger[i]);
         }
         // khởi tạo và gán giá trị trực tiếp cho mảng
         int[] arr = new int[]{1,2,3,4};
         for (int i = 0; i < arr.length; i++) {
-            System.out.println("Index of" + i + ": " + arr[i]);
+            System.out.println("Index of " + i + ": " + arr[i]);
         }
     }
     public static void methodArrays(){
@@ -27,7 +28,7 @@ public class Main {
         System.out.println("Array 1: " + Arrays.toString(arr1));
         System.out.println("Arrays.sort()");
         int[] arr2 = {5, 3, 1, 4, 2};
-        Arrays.sort(arr1);
+        Arrays.sort(arr2);
         System.out.println("Array after sort: " + Arrays.toString(arr2));
         System.out.println("Arrays.fill()");
         int[] arr3 = new int[5];
@@ -105,7 +106,7 @@ public class Main {
         int choice;
 
         do {
-            System.out.println("===== MENU =====");
+            System.out.println("\n===== MENU =====");
             System.out.println("1. Array");
             System.out.println("2. Method Array");
             System.out.println("3. Multidimensional Array");

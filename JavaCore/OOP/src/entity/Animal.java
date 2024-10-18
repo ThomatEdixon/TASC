@@ -29,4 +29,7 @@ public abstract class Animal {
     public void breath(){
         System.out.println("is breathing");
     }
+    public void speed(){ // khác kiểu dữ liệu với interface run lớp con không thể ovrriding
+        System.out.println("10km/h");
+    }
 }
