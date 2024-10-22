@@ -6,13 +6,14 @@ import exception.InvalidEmailException;
 import exception.InvalidPhoneNumberException;
 import exception.NullOrEmptyFieldException;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 public class CustomerValidation {
 
-    public static void validateCustomer(String name, String email, String phoneNumber, Set<String> existingPhoneNumbers) throws Exception {
+    public static void validateCustomer(String name, String email, String phoneNumber, Map<String,Customer> customerMap) throws Exception {
         if (name == null || name.isEmpty()) {
             throw new NullOrEmptyFieldException("Name cannot be null or empty.\n");
         }
@@ -25,12 +26,16 @@ public class CustomerValidation {
             throw new InvalidPhoneNumberException("Phone number must be 10 digits.\n ");
         }
 
-        if (isPhoneNumberDuplicate(phoneNumber, existingPhoneNumbers)) {
+        if (isPhoneNumberDuplicate(phoneNumber, customerMap)) {
             throw new DuplicatePhoneNumberException("Phone number already exists.");
         }
     }
 
-    private static boolean isPhoneNumberDuplicate(String phoneNumber, Set<String> existingPhoneNumbers) {
+    private static boolean isPhoneNumberDuplicate(String phoneNumber, Map<String,Customer> customerMap) {
+        Set<String> existingPhoneNumbers = new HashSet<>();
+        for(String keyPhoneNumber : customerMap.keySet()){
+            existingPhoneNumbers.add(keyPhoneNumber);
+        }
         return existingPhoneNumbers.contains(phoneNumber);
     }
 }

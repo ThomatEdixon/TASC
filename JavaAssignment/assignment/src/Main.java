@@ -5,19 +5,19 @@ import validation.CustomerValidation;
 import java.util.*;
 
 public class Main {
-    private static List<Customer> customers = new LinkedList<>();
-    private static Set<String> phoneNumbers = new HashSet<>();
     private static Map<String, Customer> customerMap = new HashMap<>();
     public static long startTime = System.nanoTime();
     public static long endTime = System.nanoTime();
 
     public static void main(String[] args) {
         startTime = System.nanoTime();
-        customers = CustomerData.loadCustomers();
+        ArrayList<Customer> customers = CustomerData.loadCustomers();
         endTime = System.nanoTime();
+        for (Customer customer: customers){
+            customerMap.put(customer.getPhoneNumber(),customer);
+        }
         System.out.println("Time to read file: " + (endTime - startTime) + " ns");
         Scanner scanner = new Scanner(System.in);
-
 
         while (true) {
             System.out.println("\n--- Customer Management ---");
@@ -51,7 +51,7 @@ public class Main {
                     break;
                 case 6:
                     startTime = System.nanoTime();
-                    CustomerData.saveCustomers(customers);
+                    CustomerData.saveCustomers(customerMap);
                     endTime = System.nanoTime();
                     System.out.println("Time to write file: " + (endTime - startTime) + " ns");
                     System.exit(0);
@@ -63,10 +63,12 @@ public class Main {
 
     private static void viewCustomers() {
         startTime = System.nanoTime();
-        if (customers.isEmpty()) {
+        if (customerMap.isEmpty()) {
             System.out.println("No customers available.");
         } else {
-            customers.forEach(customer -> System.out.println(customer.toString()));
+            for (Customer customer : customerMap.values()) {
+                System.out.println(customer.toString());
+            }
         }
         endTime = System.nanoTime();
         System.out.println("Time to view customer: " + (endTime - startTime) + " ns");
@@ -86,14 +88,12 @@ public class Main {
                 System.out.print("Enter phone number: ");
                 String phoneNumber = scanner.nextLine();
 
-                CustomerValidation.validateCustomer(name, email, phoneNumber, phoneNumbers);
+                CustomerValidation.validateCustomer(name, email, phoneNumber, customerMap);
                 startTime = System.nanoTime();
                 Customer newCustomer = new Customer(name, email, phoneNumber);
-                customers.add(newCustomer);
+                customerMap.put(phoneNumber,newCustomer);
                 endTime = System.nanoTime();
                 System.out.println("Time to add 1 customer: " + (endTime - startTime) + " ns");
-                phoneNumbers.add(phoneNumber);
-                customerMap.put(phoneNumber,newCustomer);
                 System.out.println("Customer added successfully.");
 
             } catch (Exception e) {
@@ -132,10 +132,18 @@ public class Main {
                 System.out.print("Enter new phone number : ");
                 String newPhoneNumber = scanner.nextLine();
 
-                CustomerValidation.validateCustomer(name, email, newPhoneNumber, phoneNumbers);
-                existingCustomer.setName(name);
-                existingCustomer.setEmail(email);
-                existingCustomer.setPhoneNumber(newPhoneNumber);
+                if (!name.isEmpty()) {
+                    existingCustomer.setName(name);
+                }
+                if (!email.isEmpty()) {
+                    CustomerValidation.validateCustomer(existingCustomer.getName(), email, existingCustomer.getPhoneNumber(), customerMap);
+                    existingCustomer.setEmail(email);
+                }
+                if (!newPhoneNumber.isEmpty() && !newPhoneNumber.equals(phoneNumber)) {
+                    CustomerValidation.validateCustomer(existingCustomer.getName(), existingCustomer.getEmail(), newPhoneNumber, customerMap);
+                    existingCustomer.setPhoneNumber(newPhoneNumber);
+                    customerMap.put(newPhoneNumber, existingCustomer);
+                }
 
                 System.out.println("Customer updated successfully.");
 
@@ -156,8 +164,6 @@ public class Main {
         Customer customerToRemove = customerMap.get(phoneNumber); // lấy customer tương ứng với key phoneNumber trong map .
 
         if (customerToRemove != null) {
-            customers.remove(customerToRemove);
-            phoneNumbers.remove(phoneNumber);
             customerMap.remove(phoneNumber);
             System.out.println("Customer deleted successfully.");
         } else {

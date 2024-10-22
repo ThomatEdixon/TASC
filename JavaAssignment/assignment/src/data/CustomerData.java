@@ -4,12 +4,13 @@ import entity.Customer;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class CustomerData {
     private static final String FILE_PATH = System.getProperty("user.dir").replace("\\","/")+"/data/customers.txt";
 
-    public static List<Customer> loadCustomers() {
-        List<Customer> customers = new ArrayList<>();
+    public static ArrayList<Customer> loadCustomers() {
+        ArrayList<Customer> customers = new ArrayList<>();
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(FILE_PATH))) {
             String line;
             while ((line = bufferedReader.readLine()) != null) {
@@ -24,9 +25,9 @@ public class CustomerData {
         return customers;
     }
 
-    public static void saveCustomers(List<Customer> customers) {
+    public static void saveCustomers(Map<String,Customer> customers) {
         try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(FILE_PATH))) {
-            for (Customer customer : customers) {
+            for (Customer customer : customers.values()) {
                 bufferedWriter.write(customer.getName() + "," + customer.getEmail() + "," + customer.getPhoneNumber());
                 bufferedWriter.newLine();
             }
