@@ -10,9 +10,9 @@ public class CustomerData {
 
     public static List<Customer> loadCustomers() {
         List<Customer> customers = new ArrayList<>();
-        try (BufferedReader br = new BufferedReader(new FileReader(FILE_PATH))) {
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(FILE_PATH))) {
             String line;
-            while ((line = br.readLine()) != null) {
+            while ((line = bufferedReader.readLine()) != null) {
                 String[] parts = line.split(",");
                 if (parts.length == 3) {
                     customers.add(new Customer(parts[0], parts[1], parts[2]));
@@ -25,10 +25,10 @@ public class CustomerData {
     }
 
     public static void saveCustomers(List<Customer> customers) {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(FILE_PATH))) {
+        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(FILE_PATH))) {
             for (Customer customer : customers) {
-                bw.write(customer.getName() + "," + customer.getEmail() + "," + customer.getPhoneNumber());
-                bw.newLine();
+                bufferedWriter.write(customer.getName() + "," + customer.getEmail() + "," + customer.getPhoneNumber());
+                bufferedWriter.newLine();
             }
         } catch (IOException e) {
             System.out.println("Error saving customers: " + e.getMessage());

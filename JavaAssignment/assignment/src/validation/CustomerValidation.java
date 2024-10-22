@@ -7,10 +7,12 @@ import exception.InvalidPhoneNumberException;
 import exception.NullOrEmptyFieldException;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class CustomerValidation {
 
-    public static void validateCustomer(String name, String email, String phoneNumber, List<Customer> customers) throws Exception {
+    public static void validateCustomer(String name, String email, String phoneNumber, Set<String> existingPhoneNumbers) throws Exception {
         if (name == null || name.isEmpty()) {
             throw new NullOrEmptyFieldException("Name cannot be null or empty.\n");
         }
@@ -19,18 +21,17 @@ public class CustomerValidation {
             throw new InvalidEmailException("Invalid email format.\n" + ". Please enter a valid email format (e.g., user123@example.com).");
         }
 
-        if (phoneNumber == null || !phoneNumber.matches("\\d{10}")) {
+        if (phoneNumber == null || !phoneNumber.matches("[0-9]{10}")) {
             throw new InvalidPhoneNumberException("Phone number must be 10 digits.\n ");
         }
 
-        if (isPhoneNumberDuplicate(phoneNumber, customers)) {
+        if (isPhoneNumberDuplicate(phoneNumber, existingPhoneNumbers)) {
             throw new DuplicatePhoneNumberException("Phone number already exists.");
         }
     }
 
-    private static boolean isPhoneNumberDuplicate(String phoneNumber, List<Customer> customers) {
-
-        return customers.stream().anyMatch(c -> c.getPhoneNumber().equals(phoneNumber));
+    private static boolean isPhoneNumberDuplicate(String phoneNumber, Set<String> existingPhoneNumbers) {
+        return existingPhoneNumbers.contains(phoneNumber);
     }
 }
 
