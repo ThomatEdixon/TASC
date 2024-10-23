@@ -131,18 +131,21 @@ public class Main {
                 String email = scanner.nextLine();
                 System.out.print("Enter new phone number (Leave if you don't want change ) : ");
                 String newPhoneNumber = scanner.nextLine();
-
-                if (!name.isEmpty()) {
-                    existingCustomer.setName(name);
-                }
-                if (!email.isEmpty()) {
-                    CustomerValidation.validateCustomer(existingCustomer.getName(), email, existingCustomer.getPhoneNumber(), customerMap);
-                    existingCustomer.setEmail(email);
-                }
-                if (!newPhoneNumber.isEmpty() && !newPhoneNumber.equals(phoneNumber)) {
-                    CustomerValidation.validateCustomer(existingCustomer.getName(), existingCustomer.getEmail(), newPhoneNumber, customerMap);
-                    existingCustomer.setPhoneNumber(newPhoneNumber);
-                    customerMap.put(newPhoneNumber, existingCustomer);
+                if(name.isEmpty() && email.isEmpty() &&newPhoneNumber.isEmpty()){
+                    System.out.println("You not change anything.");
+                }else {
+                    if (!name.isEmpty()) {
+                        existingCustomer.setName(name);
+                    }
+                    if (!email.isEmpty()) {
+                        CustomerValidation.validateCustomer(existingCustomer.getName(), email, existingCustomer.getPhoneNumber(), customerMap);
+                        existingCustomer.setEmail(email);
+                    }
+                    if (!newPhoneNumber.isEmpty() && !newPhoneNumber.equals(phoneNumber)) {
+                        CustomerValidation.validateCustomer(existingCustomer.getName(), existingCustomer.getEmail(), newPhoneNumber, customerMap);
+                        existingCustomer.setPhoneNumber(newPhoneNumber);
+                        customerMap.put(newPhoneNumber, existingCustomer);
+                    }
                 }
 
                 System.out.println("Customer updated successfully.");
