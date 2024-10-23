@@ -12,6 +12,7 @@ public class Main {
     public static void main(String[] args) {
         startTime = System.nanoTime();
         ArrayList<Customer> customers = CustomerData.loadCustomers();
+
         endTime = System.nanoTime();
         for (Customer customer: customers){
             customerMap.put(customer.getPhoneNumber(),customer);
@@ -41,7 +42,6 @@ public class Main {
                     break;
                 case 3:
                     searchByPhoneNumber(scanner);
-
                     break;
                 case 4:
                     editCustomer(scanner);
@@ -125,11 +125,11 @@ public class Main {
         Customer existingCustomer = customerMap.get(phoneNumber);
         if (existingCustomer != null) {
             try {
-                System.out.print("Enter new name : ");
+                System.out.print("Enter new name (Leave if you don't want change ) : ");
                 String name = scanner.nextLine();
-                System.out.print("Enter new email : ");
+                System.out.print("Enter new email (Leave if you don't want change ) : ");
                 String email = scanner.nextLine();
-                System.out.print("Enter new phone number : ");
+                System.out.print("Enter new phone number (Leave if you don't want change ) : ");
                 String newPhoneNumber = scanner.nextLine();
 
                 if (!name.isEmpty()) {
