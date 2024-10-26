@@ -2,21 +2,19 @@ import data.CustomerData;
 import entity.Customer;
 import validation.CustomerValidation;
 
+import java.io.IOException;
 import java.util.*;
+import java.util.concurrent.ExecutionException;
 
 public class Main {
     private static Map<String, Customer> customerMap = new HashMap<>();
     public static long startTime = System.nanoTime();
     public static long endTime = System.nanoTime();
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException, ExecutionException, IOException {
         startTime = System.nanoTime();
-        ArrayList<Customer> customers = CustomerData.loadCustomers();
-
+        customerMap = CustomerData.loadCustomers();
         endTime = System.nanoTime();
-        for (Customer customer: customers){
-            customerMap.put(customer.getPhoneNumber(),customer);
-        }
         System.out.println("Time to read file: " + (endTime - startTime) + " ns");
         Scanner scanner = new Scanner(System.in);
 
@@ -80,27 +78,38 @@ public class Main {
         scanner.nextLine();  // Clear the buffer
 
         for (int i = 0; i < n; i++) {
-            try {
+            System.out.print("Enter name: ");
+            String name = scanner.nextLine();
+            while (!CustomerValidation.validateName(name)){
+                System.out.println("Name cannot be null or empty. Please , try again !\n");
                 System.out.print("Enter name: ");
-                String name = scanner.nextLine();
-                System.out.print("Enter email: ");
-                String email = scanner.nextLine();
-                System.out.print("Enter phone number: ");
-                String phoneNumber = scanner.nextLine();
-
-                CustomerValidation.validateCustomer(name, email, phoneNumber, customerMap);
-                startTime = System.nanoTime();
-                Customer newCustomer = new Customer(name, email, phoneNumber);
-                customerMap.put(phoneNumber,newCustomer);
-                endTime = System.nanoTime();
-                System.out.println("Time to add 1 customer: " + (endTime - startTime) + " ns");
-                System.out.println("Customer added successfully.");
-
-            } catch (Exception e) {
-                System.out.println("Error: " + e.getMessage() + "\n Please enter valid customer information.");
-                i--; // Retry the current customer
-
+                name = scanner.nextLine();
             }
+            System.out.print("Enter email: ");
+            String email = scanner.nextLine();
+            while (!CustomerValidation.validateEmail(email)){ // có nên tạo hàm static để tái sử dụng ko ?
+                System.out.println("Invalid email format.\n" + "Please enter a valid email format (e.g., user123@example.com).");
+                System.out.print("Enter email: ");
+                email = scanner.nextLine();
+            }
+            System.out.print("Enter phone number: ");
+            String phoneNumber = scanner.nextLine();
+            while (!CustomerValidation.validatePhoneNumber(phoneNumber)){
+                System.out.println("Phone number must be 10 digits.Please, try again !");
+                System.out.print("Enter phone number: ");
+                phoneNumber = scanner.nextLine();
+            }
+            while (!CustomerValidation.validateDuplicate(phoneNumber,customerMap)){
+                System.out.println("Phone number already exists.Please, try again !");
+                System.out.print("Enter phone number: ");
+                phoneNumber = scanner.nextLine();
+            }
+            startTime = System.nanoTime();
+            Customer newCustomer = new Customer(name, email, phoneNumber);
+            customerMap.put(phoneNumber,newCustomer);
+            endTime = System.nanoTime();
+            System.out.println("Time to add 1 customer: " + (endTime - startTime) + " ns");
+            System.out.println("Customer added successfully.");
         }
     }
 
@@ -124,34 +133,34 @@ public class Main {
         startTime = System.nanoTime();
         Customer existingCustomer = customerMap.get(phoneNumber);
         if (existingCustomer != null) {
-            try {
-                System.out.print("Enter new name (Leave if you don't want change ) : ");
-                String name = scanner.nextLine();
-                System.out.print("Enter new email (Leave if you don't want change ) : ");
-                String email = scanner.nextLine();
-                System.out.print("Enter new phone number (Leave if you don't want change ) : ");
-                String newPhoneNumber = scanner.nextLine();
-                if(name.isEmpty() && email.isEmpty() &&newPhoneNumber.isEmpty()){
-                    System.out.println("You not change anything.");
-                }else {
-                    if (!name.isEmpty()) {
-                        existingCustomer.setName(name);
+            System.out.print("Enter new name (Leave if you don't want change ) : ");
+            String name = scanner.nextLine();
+            System.out.print("Enter new email (Leave if you don't want change ) : ");
+            String email = scanner.nextLine();
+            System.out.print("Enter new phone number (Leave if you don't want change ) : ");
+            String newPhoneNumber = scanner.nextLine();
+            if(name.isEmpty() && email.isEmpty() && (newPhoneNumber.isEmpty()||newPhoneNumber.equals(phoneNumber))){
+                System.out.println("You not change anything.");
+            }else {
+                if (!name.isEmpty()) {
+                    existingCustomer.setName(name);
+                }
+                if (!email.isEmpty()) {
+                    while(!CustomerValidation.validateEmail(email)){
+                        System.out.println("Invalid email format.\n" + "Please enter a valid email format (e.g., user123@example.com).");
+                        System.out.print("Enter new email (Leave if you don't want change ) : ");
+                        email = scanner.nextLine();
                     }
-                    if (!email.isEmpty()) {
-                        CustomerValidation.validateCustomer(existingCustomer.getName(), email, existingCustomer.getPhoneNumber(), customerMap);
-                        existingCustomer.setEmail(email);
-                    }
-                    if (!newPhoneNumber.isEmpty() && !newPhoneNumber.equals(phoneNumber)) {
-                        CustomerValidation.validateCustomer(existingCustomer.getName(), existingCustomer.getEmail(), newPhoneNumber, customerMap);
-                        existingCustomer.setPhoneNumber(newPhoneNumber);
-                        customerMap.put(newPhoneNumber, existingCustomer);
+                    existingCustomer.setEmail(email);
+                }
+                if (!newPhoneNumber.isEmpty() && !newPhoneNumber.equals(phoneNumber)) {
+                    while (!CustomerValidation.validatePhoneNumber(newPhoneNumber)){
+                        System.out.println("Phone number must be 10 digits.Please, try again !");
+                        System.out.print("Enter new phone number (Leave if you don't want change ) : ");
+                        newPhoneNumber = scanner.nextLine();
                     }
                 }
-
                 System.out.println("Customer updated successfully.");
-
-            } catch (Exception e) {
-                System.out.println("Error: " + e.getMessage());
             }
         } else {
             System.out.println("Customer not found.");

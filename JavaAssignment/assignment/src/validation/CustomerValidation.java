@@ -1,10 +1,6 @@
 package validation;
 
 import entity.Customer;
-import exception.DuplicatePhoneNumberException;
-import exception.InvalidEmailException;
-import exception.InvalidPhoneNumberException;
-import exception.NullOrEmptyFieldException;
 
 import java.util.HashSet;
 import java.util.List;
@@ -12,23 +8,31 @@ import java.util.Map;
 import java.util.Set;
 
 public class CustomerValidation {
-
-    public static void validateCustomer(String name, String email, String phoneNumber, Map<String,Customer> customerMap) throws Exception {
+    public static boolean validateName(String name){
         if (name == null || name.isEmpty()) {
-            throw new NullOrEmptyFieldException("Name cannot be null or empty.\n");
+            return false;
         }
-
+        return true;
+    }
+    public static boolean validateEmail(String email){
         if (email == null || !email.matches("^[a-z]+[0-9]{1,12}+@([a-z]+.)+[a-z]{2,4}$")) {
-            throw new InvalidEmailException("Invalid email format.\n" + ". Please enter a valid email format (e.g., user123@example.com).");
-        }
 
+            return false;
+        }
+        return true;
+    }
+    public static boolean validatePhoneNumber(String phoneNumber){
         if (phoneNumber == null || !phoneNumber.matches("[0-9]{10}")) {
-            throw new InvalidPhoneNumberException("Phone number must be 10 digits.\n ");
+            return false;
         }
 
+        return true;
+    }
+    public static boolean validateDuplicate(String phoneNumber,Map<String,Customer> customerMap){
         if (isPhoneNumberDuplicate(phoneNumber, customerMap)) {
-            throw new DuplicatePhoneNumberException("Phone number already exists.");
+            return false;
         }
+        return true;
     }
 
     private static boolean isPhoneNumberDuplicate(String phoneNumber, Map<String,Customer> customerMap) {
