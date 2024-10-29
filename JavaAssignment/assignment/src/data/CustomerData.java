@@ -12,7 +12,24 @@ public class CustomerData {
     private static final String BACKUP_PATH = System.getProperty("user.dir").replace("\\","/")+"/data/backup.txt";
     private static final int NUMBER_THREADS = 8;// 2042453851 10
                                                  //4100398417 1
+    public static Map<String,Customer> LoadCustomerBuffer(){
+        Map<String,Customer> customerMap = new HashMap<>();
+        try(BufferedReader bufferedReader = new BufferedReader(new FileReader(FILE_PATH))) {
+            String line = bufferedReader.readLine();
+            while (line!=null){
+                String[] info = line.split(",");
+                String name = info[0];
+                String email = info[1];
+                String phoneNumber = info[2];
+                Customer customer = new Customer(name,email,phoneNumber);
+                customerMap.put(phoneNumber,customer);
+            }
 
+        }catch (IOException e){
+            System.out.println(e.getMessage());
+        }
+        return customerMap;
+    }
     public static Map<String,Customer> loadCustomers() throws InterruptedException, ExecutionException, IOException{
         ExecutorService executorService = Executors.newFixedThreadPool(NUMBER_THREADS);
 

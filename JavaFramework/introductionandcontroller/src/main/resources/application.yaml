@@ -1,0 +1,12 @@
+server:
+  port: 8088
+spring:
+  datasource:
+    username: root
+    password: 22102003
+    url: "jdbc:mysql://localhost:3306/tasc_angular"
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true

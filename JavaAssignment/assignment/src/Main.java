@@ -13,7 +13,7 @@ public class Main {
 
     public static void main(String[] args) throws InterruptedException, ExecutionException, IOException {
         startTime = System.nanoTime();
-        customerMap = CustomerData.loadCustomers();
+        customerMap = CustomerData.LoadCustomerBuffer();
         endTime = System.nanoTime();
         System.out.println("Time to read file: " + (endTime - startTime) + " ns");
         Scanner scanner = new Scanner(System.in);
