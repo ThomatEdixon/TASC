@@ -1,11 +1,11 @@
 package org.example.introduction.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.introduction.dto.request.UserRequest;
 import org.example.introduction.entity.User;
 import org.example.introduction.service.user.UserService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,8 +19,12 @@ public class UserController {
     public ResponseEntity<?> getAll(){
         return ResponseEntity.ok(userService.getAll());
     }
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getById(@PathVariable int id){
+        return ResponseEntity.ok(userService.findById(id));
+    }
     @PostMapping("")
-    public ResponseEntity<?> create(@RequestBody UserRequest userRequest){
+    public ResponseEntity<?> create(@RequestBody @Valid UserRequest userRequest){
         return ResponseEntity.ok(userService.createUser(userRequest));
     }
     @PutMapping("/update/{id}")
