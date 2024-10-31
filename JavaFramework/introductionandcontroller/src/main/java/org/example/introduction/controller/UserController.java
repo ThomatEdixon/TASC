@@ -2,9 +2,12 @@ package org.example.introduction.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.example.introduction.dto.request.ApiResponse;
 import org.example.introduction.dto.request.UserRequest;
+import org.example.introduction.dto.response.UserResponse;
 import org.example.introduction.entity.User;
 import org.example.introduction.service.user.UserService;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,16 +19,21 @@ import java.util.List;
 public class UserController {
     private final UserService userService;
     @GetMapping("")
-    public ResponseEntity<?> getAll(){
-        return ResponseEntity.ok(userService.getAll());
+    public ResponseEntity<?> getAll(@RequestParam(defaultValue = "0") int page,
+                                    @RequestParam(defaultValue = "5") int size)
+    {
+        Page<User> userPage = userService.getAll(page, size);
+        return ResponseEntity.ok(userPage.getContent());
     }
     @GetMapping("/{id}")
     public ResponseEntity<?> getById(@PathVariable int id){
         return ResponseEntity.ok(userService.findById(id));
     }
     @PostMapping("")
-    public ResponseEntity<?> create(@RequestBody @Valid UserRequest userRequest){
-        return ResponseEntity.ok(userService.createUser(userRequest));
+    public ApiResponse<UserResponse> create(@RequestBody @Valid UserRequest userRequest){
+        return ApiResponse.<UserResponse>builder()
+                .result(userService.createUser(userRequest))
+                .build();
     }
     @PutMapping("/update/{id}")
     public ResponseEntity<?> update(@PathVariable int id,@RequestBody UserRequest userRequest){

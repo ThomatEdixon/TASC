@@ -12,9 +12,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class UserRequest {
-    @Size(min = 3, message = "First Name must be at least 3 characters")
+    @Size(min = 3, message = "FIRSTNAME_INVALID")
     private String firstName;
-    @Size(min = 3, message = "First Name must be at least 3 characters")
+    @Size(min = 3, message = "LASTNAME_INVALID")
     private String lastName;
     private int age;
 }

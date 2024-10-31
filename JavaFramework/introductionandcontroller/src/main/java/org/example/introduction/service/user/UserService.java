@@ -6,8 +6,11 @@ import org.example.introduction.dto.response.UserResponse;
 import org.example.introduction.entity.User;
 import org.example.introduction.mapper.UserMapper;
 import org.example.introduction.repositories.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,8 +20,11 @@ public class UserService implements IUserService{
     private final UserRepository userRepository;
     private final UserMapper userMapper;
     @Override
-    public List<User> getAll() {
-        return userRepository.findAll();
+    public Page<User> getAll(int page,int size) {
+        Specification<User> specification = Specification
+                .where(hasAgeGreaterThan(20));
+        Pageable pageable = PageRequest.of(page, size);
+        return userRepository.findAll(specification,pageable);
     }
 
     @Override
@@ -46,5 +52,9 @@ public class UserService implements IUserService{
     public List<User> deleteUser(int id) {
         userRepository.deleteById(id);
         return userRepository.findAll();
+    }
+    public static Specification<User> hasAgeGreaterThan(int age) {
+        return (root, query, criteriaBuilder) ->
+                criteriaBuilder.greaterThan(root.get("age"), age);
     }
 }
